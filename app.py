@@ -31,7 +31,7 @@ def load_key():
 
 def create_acc():
     # Username with no leading and trailing white spaces
-    user_name = input("\nUsername : ").rstrip().lstrip()
+    user_name = input("\nUsername : ").title().strip()
 
     # Checking username characters length
     if user_name == '' :
