@@ -35,19 +35,77 @@ class User:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        self.passwords = {}  # Dictionary to store passwords
+        self.passwords = {} # Dictionary to store passwords
 
+    def add_password(self, website, password):
+        self.passwords[website] = password
+        print(f"\nPassword for {website} saved successfully!")
+        input("\nPress Enter to Continue....")
+
+    def get_password(self, website):
+        if website in self.passwords:
+            password = self.passwords[website]
+            print(f"Username: {self.username}")
+            print(f"Password for {website} : {password}")
+        else:
+            print(f"\nNo password found for {website}")
+        input("\nPress Enter to Continue....")
 
 # Create a list to store User objects
 users = []
 
 ##------------------------------------------------------------------------
+# Function to check unername and password format
+def is_valid(cred_type,visible = True):
+    if cred_type == ("Username") :
+        credential = input("\nEnter Username: ").title().strip()
+        # Checking username length
+        if credential == '' :
+            print('Username required !!!')
+            return None
+        elif len(credential) < 3 or len(credential) > 15 :
+            print("Only 3 - 15 characters allowed in Username")
+            return None
+        else:
+            return credential
+    elif cred_type == ("Password"):
+        if visible:
+            credential = input("Enter Password: ")
+        else:
+            credential = getpass.getpass("Enter Password: ")
+        # Checking password length
+        if credential == '':
+            print('User Password required !!!')
+            return None
+        elif credential.count(" ") != 0:
+            print("\nPassword can't have space!!!")
+            return None
+        elif len(credential) < 4 or len(credential) > 12:
+            print("\nPassword must have 4 - 12 characters !!!")
+            return None
+        else:
+            return credential
+
+    else:
+        # Checking website length
+        pass
+
+##------------------------------------------------------------------------
 # Create User Function
 
 def create_user():
-    username = input("\nEnter Username: ").title()
-    password = getpass.getpass("Enter Password: ")
-    confirm_password = getpass.getpass("Confirm Password: ")
+    print("\n---- CREATE USER ACCOUNT ----")
+    cred_check = is_valid("Username")
+    if cred_check:
+        username = cred_check
+    else:
+        return
+    cred_check = is_valid("Password")
+    if cred_check:
+        password = cred_check
+    else:
+        return 
+    confirm_password = input("Confirm Password: ")
     if confirm_password == password :
         user = User(username, password)
         users.append(user)
@@ -59,12 +117,22 @@ def create_user():
 # User Login Function 
 
 def user_login():
-    username = input("\nUsername: ").title()
-    password = getpass.getpass("Password: ")
+    print("\n---- LOGIN USER ----")
+    cred_check = is_valid("Username")
+    if cred_check:
+        username = cred_check
+    else:
+        return
+    cred_check = is_valid("Password",False)
+    if cred_check:
+        password = cred_check
+    else:
+        return
     for user in users:
         if user.username == username and user.password == password:
-            print("Login Successfull !!!")
-            return username
+            print("\nLogin Successfull !!!\n")
+            sleep(0.8)
+            return user,username
         elif user.username == username and user.password != password:
             print("Login failed !!! Invalid credentials.")
             return None
@@ -81,6 +149,7 @@ if master_pwd != '2023':
     exit()
 
 print("\nACCESS GRANTED !!!\nWelcome\n")
+sleep(1)
 
 ##------------------------------------------------------------------------
 ## Setting up Password_Manager_Files directory
@@ -137,24 +206,36 @@ master_key = Fernet(key)
 
 def user_display():
     while True:
-        print(f"\nUser : {logged_in_user}\n")
+        print(f"\n--------\n| User | --> {user_name}\n--------\n")
         print("1. Add a new password")
         print("2. Retrieve a password")
-        print("3. Logout")
+        print("3. Logout\n")
 
-        user_choice = input("Enter your choice: ")
+        user_choice = input(" -->  ")
 
         if user_choice == '1':
-            website = input("Enter website: ")
-            password = getpass.getpass("Enter password: ")
-            logged_in_user.add_password(website, password)
+            website = input("\nEnter Website : ").strip()
+            cred_check = is_valid("Password")
+            if cred_check:
+                password = cred_check
+            else:
+                return
+            confirm_password = input("Confirm Password: ")
+            if confirm_password == password :
+                logged_in_user.add_password(website, password)
+            else:
+                print("\nPassword didn't match\nFailed to save Website and Password!")
         elif user_choice == '2':
-            website = input("Enter website to retrieve password: ")
+            website = input("\nEnter website to retrieve password: ").strip()
             logged_in_user.get_password(website)
+
         elif user_choice == '3':
+            print("\nLogout Successfull !!!")
+            sleep(1)
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("\nInvalid choice. Please try again.")
+            sleep(0.7)
 ##------------------------------------------------------------------------
 # Menu Drien main display
 
@@ -166,9 +247,10 @@ while True:
         create_user()
         input("\nPress Enter to Continue....")        
     elif choice == '2':
-        logged_in_user = user_login()
+        logged_in_user,user_name = user_login()
         if logged_in_user:
             user_display()
+            input("\nPress Enter to Continue....")
         else:
             input("\nPress Enter to Continue....")
     elif choice == '3':
