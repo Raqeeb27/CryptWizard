@@ -1,11 +1,12 @@
 ## Import Modules
+import os
 import mysql.connector
 from mysql.connector import Error
-import os
 from cryptography.fernet import Fernet
 import getpass
-from time import time, sleep
+from time import sleep
 import bcrypt
+import base64
 
 ##------------------------------------------------------------------------
 # Function to establish a database connection
@@ -69,27 +70,31 @@ def initialize_database():
             connection.close()
 
 ##------------------------------------------------------------------------
-# Key Generation Function
+# Initialize cipher key using user's master key
 
-def generate_aes_key():
-    aes_key = Fernet.generate_key()       
-
-##------------------------------------------------------------------------
-# Key Load Function
-
-def load_key():
-        pass
-
+def initialize_cipher_key(master_key,salt):
+    # Derive the key from the master password and salt using a key derivation function (KDF)
+    '''kdf_key = bcrypt.kdf(
+        password=master_key,
+        salt=salt,
+        desired_key_bytes=32,  # Fernet key length is 32 bytes
+        rounds=100000,  # You can adjust the number of rounds for your security needs
+        #algorithm="sha256"
+    )
+    return Fernet(base64.urlsafe_b64encode(kdf_key))'''
 ##------------------------------------------------------------------------
 # Function to store password for a user to the database
 
 def record_password(user_id, website, password):
+    # Encrypt the password using cipher key
+    encrypted_password = cipher_key.encrypt(password)
+    print(type(encrypted_password))
     connection = connect_to_database()
     if connection:
         try:
             cursor = connection.cursor()
             query = "INSERT INTO Passwords (user_id, website, password) VALUES (%s, %s, %s)"
-            cursor.execute(query, (user_id, website, password))
+            cursor.execute(query, (user_id, website, encrypted_password.decode()))
             connection.commit()
             print(f"\nPassword for '{website}' saved successfully!")
             input("\nPress Enter to Continue....")
@@ -112,8 +117,11 @@ def lookup_password(user_id, username, website):
             cursor.execute(query, (user_id, website))
             result = cursor.fetchone()
             if result:
+                encrypted_password = result[0]
+                # Decrypt the password
+                decrypted_password = cipher_key.decrypt(encrypted_password.encode()).decode()
                 print(f"\nUsername: {username}")
-                print(f"Password for '{website}' : {result[0]}")
+                print(f"Password for '{website}' : {decrypted_password}")
             else:
                 print(f"\nNo password found for '{website}'")
             input("\nPress Enter to Continue....")
@@ -220,12 +228,12 @@ def user_login():
     if cred_check:
         username = cred_check
     else:
-        return None,None
+        return None,None,None
     cred_check = is_valid("Password",False)
     if cred_check:
         input_password = cred_check
     else:
-        return None,None
+        return None,None,None
     connection = connect_to_database()
     if connection:
         try:
@@ -240,15 +248,23 @@ def user_login():
 
                 if user_master_key == stored_master_key.encode():
                     print("\nAuthentication successful !!!\n")
-                    # Use input_master_key to decrypt user data
+                    # Generate a salt for the Fernet key
+                    salt = os.urandom(16)
+
+                    # Generate a Fernet key from the user's master key and the salt
+                    cipher_key = initialize_cipher_key(input_password, salt)
+                    # Initializing cipher key with user master key
+                    #cipher_key = initialize_cipher_key(user_master_key)
+                    print(type(cipher_key))
+
                     sleep(1)
-                    return logged_user_id,logged_username
+                    return logged_user_id,logged_username,cipher_key
                 else:
                     print("\nAuthentication failed !!!\nUsername or Password is Incorrect\n")
             else:
                 print("\n Unrecognized User - Authentication failed !!!")
             sleep(0.7)
-            return None,None
+            return None,None,None
             
         except Error as e:
             print("Error in User Login: ", e)
@@ -314,7 +330,7 @@ while True:
         register_user()
         input("\nPress Enter to Continue....")        
     elif choice == '2':
-        logged_user_id,logged_username = user_login()
+        logged_user_id, logged_username, cipher_key = user_login()
         if logged_user_id:
             logged_user_display()
             input("\nPress Enter to Continue....")
