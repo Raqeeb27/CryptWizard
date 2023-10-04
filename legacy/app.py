@@ -87,14 +87,14 @@ def initialize_cipher_key(master_key,salt):
 
 def record_password(user_id, website, password):
     # Encrypt the password using cipher key
-    encrypted_password = cipher_key.encrypt(password)
-    print(type(encrypted_password))
+    #encrypted_password = cipher_key.encrypt(password)
+    #print(type(encrypted_password))
     connection = connect_to_database()
     if connection:
         try:
             cursor = connection.cursor()
             query = "INSERT INTO Passwords (user_id, website, password) VALUES (%s, %s, %s)"
-            cursor.execute(query, (user_id, website, encrypted_password.decode()))
+            cursor.execute(query, (user_id, website, password))
             connection.commit()
             print(f"\nPassword for '{website}' saved successfully!")
             input("\nPress Enter to Continue....")
@@ -117,11 +117,11 @@ def lookup_password(user_id, username, website):
             cursor.execute(query, (user_id, website))
             result = cursor.fetchone()
             if result:
-                encrypted_password = result[0]
+                password = result[0]
                 # Decrypt the password
-                decrypted_password = cipher_key.decrypt(encrypted_password.encode()).decode()
+                #decrypted_password = cipher_key.decrypt(encrypted_password.encode()).decode()
                 print(f"\nUsername: {username}")
-                print(f"Password for '{website}' : {decrypted_password}")
+                print(f"Password for '{website}' : {password}")
             else:
                 print(f"\nNo password found for '{website}'")
             input("\nPress Enter to Continue....")
@@ -255,7 +255,7 @@ def user_login():
                     cipher_key = initialize_cipher_key(input_password, salt)
                     # Initializing cipher key with user master key
                     #cipher_key = initialize_cipher_key(user_master_key)
-                    print(type(cipher_key))
+                    #print(type(cipher_key))
 
                     sleep(1)
                     return logged_user_id,logged_username,cipher_key
