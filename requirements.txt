@@ -4,3 +4,4 @@
 bcrypt
 mysql-connector-python
 PyQt5
+pyDes
