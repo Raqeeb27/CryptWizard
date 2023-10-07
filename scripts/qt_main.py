@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtCore import QTimer
 import bcrypt
 
@@ -22,7 +22,8 @@ from mysql.connector import Error
 
 
 class Ui_MainWindow(object):
-        
+    def __init__(self):
+        self.msg_box = None 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(599, 473)
@@ -115,13 +116,9 @@ class Ui_MainWindow(object):
 
     def open_register_dialog(self):
         register_dialog_obj.setupUi(register_dialog)
-
-        register_dialog_obj.username_error_label.hide()
-        register_dialog_obj.password_error_label.hide()
-        register_dialog_obj.confirm_pwd_error_label.hide()
           
         # Connect the cancel_button click event to close the register_dialog
-        register_dialog_obj.cancel_button.clicked.connect(register_dialog.close)
+        register_dialog_obj.cancel_button.clicked.connect(self.cancel_register)
         register_dialog_obj.register_button.clicked.connect(self.register_user)
         self.exit_button.clicked.connect(register_dialog.close)        
 
@@ -137,7 +134,7 @@ class Ui_MainWindow(object):
         # Show the SigninDialog
         signin_dialog.show()
         # Connect the cancel_button click event to close the signin_dialog
-        signin_dialog_obj.cancel_button.clicked.connect(signin_dialog.close)
+        signin_dialog_obj.cancel_button.clicked.connect(self.cancel_signin)
         signin_dialog_obj.confirm_button.clicked.connect(self.signin_user)
 
         self.exit_button.clicked.connect(signin_dialog.close)
@@ -149,7 +146,7 @@ class Ui_MainWindow(object):
         input_confirm_pwd = register_dialog_obj.confirm_pwd_input_field.text()
 
         cred_check, error_label = self.is_valid(input_username, "Username")
-        username = None
+        username = ''
         if cred_check:
             register_dialog_obj.username_error_label.hide()
             username = cred_check
@@ -158,7 +155,7 @@ class Ui_MainWindow(object):
             register_dialog_obj.username_error_label.show()
 
         cred_check, error_label = self.is_valid(input_password, "Password")
-        master_password = None
+        master_password = ''
         if cred_check:
             register_dialog_obj.password_error_label.hide()
             master_password = cred_check
@@ -167,61 +164,57 @@ class Ui_MainWindow(object):
             register_dialog_obj.password_error_label.show()
 
         cred_check, error_label = self.is_valid(input_confirm_pwd, "Confirm Password")
-        confirm_password = None
+        confirm_password = ''
         if cred_check:
             register_dialog_obj.confirm_pwd_error_label.hide()
             confirm_password = cred_check
         elif error_label:
             register_dialog_obj.confirm_pwd_error_label.setText(error_label)
             register_dialog_obj.confirm_pwd_error_label.show()
-        #timer = QTimer()
-        #timer.timeout.connect(lambda: register_dialog_obj.username_error_label.hide())
-        #timer.start(5000)
-        if all(creds is not None for creds in (confirm_password, master_password, username)) and (confirm_password == master_password):
-            # Generate a random salt
-            salt = bcrypt.gensalt()        
-            # Derive the master key using the master password and salt
-            hashed_master_key = self.hash_master_key(master_password, salt)
-            connection = self.connect_to_database()
-            if connection:
-                #try:
-                    cursor = connection.cursor()
-                    query = "INSERT INTO Users (username, salt, master_key) VALUES (%s, %s, %s)"
-                    cursor.execute(query, (username, salt.decode(), hashed_master_key.decode()))
-                    print(salt.decode(), hashed_master_key.decode())
-                    connection.commit()
-                    print("\nUser created successfully!")
-                    register_dialog_obj.register_button.setEnabled(False)
-                #except Error as e:
-                  #  print(f"Error creating User Account: {e}\n")
-                #finally:
-                    cursor.close()
-                    connection.close()
-        else:
-            print("\nPassword didn't match,\nUser account creation failed!")
+
+        if len(username) >= 8 and len(master_password) >= 8 and len(confirm_password) != 0 :
+            if confirm_password == master_password:
+                # Generate a random salt
+                salt = bcrypt.gensalt()        
+                # Derive the master key using the master password and salt
+                hashed_master_key = self.hash_master_key(master_password, salt)
+                connection = self.connect_to_database()
+                if connection:
+                    try:
+                        cursor = connection.cursor()
+                        query = "INSERT INTO Users (username, salt, master_key) VALUES (%s, %s, %s)"
+                        cursor.execute(query, (username, salt.decode(), hashed_master_key.decode()))
+                        connection.commit()
+                        self.show_message_box("Registration", "  Registration Successful  ", QMessageBox.Information)
+                        register_dialog.close()
+                    except Error as e:
+                        self.show_message_box("Registration Error","Error in User Registration",QMessageBox.Critical)
+                    finally:
+                        cursor.close()
+                        connection.close()
+            else:
+                self.show_message_box("Registration Error","Password didn't match\nRegistration failed!", QMessageBox.Critical)
 
 
     def signin_user(self):
         input_username = signin_dialog_obj.username_input_field.text()
         input_password = signin_dialog_obj.pwd_input_field.text()
 
-        if input_username == '' or input_password == '':
-            if input_username == '':
-                signin_dialog_obj.username_error_label.setText("*This field required")
-                signin_dialog_obj.username_error_label.show()
-            else:
-                signin_dialog_obj.username_error_label.hide()
-            if input_password == '':
-                signin_dialog_obj.password_error_label.setText("*This field reqired")
-                signin_dialog_obj.password_error_label.show()
-            else:
-                signin_dialog_obj.password_error_label.hide()
+        if input_username == '':
+            signin_dialog_obj.username_error_label.setText("*Username required")
+            signin_dialog_obj.username_error_label.show()
         else:
             signin_dialog_obj.username_error_label.hide()
+        if input_password == '':
+            signin_dialog_obj.password_error_label.setText("*User Password reqired")
+            signin_dialog_obj.password_error_label.show()
+        else:
             signin_dialog_obj.password_error_label.hide()
+
+        if len(input_username) != 0 and len(input_password) != 0:
             connection = self.connect_to_database()
             if connection:
-                #try:
+                try:
                     cursor = connection.cursor()
                     query1 = "SELECT id, username, salt, master_key FROM Users WHERE username = %s"
                     cursor.execute(query1, (input_username, ))
@@ -232,7 +225,7 @@ class Ui_MainWindow(object):
                         user_master_key = self.hash_master_key(input_password, stored_salt.encode())
 
                         if user_master_key == stored_master_key.encode():
-                            print("\nAuthentication successful !!!\n")
+                            
                             # Generate a salt for the Fernet key
                             #salt = os.urandom(16)
 
@@ -240,23 +233,39 @@ class Ui_MainWindow(object):
                             #cipher_key = self.initialize_cipher_key(input_password, salt)
                             # Initializing cipher key with user master key
                             #cipher_key = initialize_cipher_key(user_master_key)
-                            #print(type(cipher_key))
 
-                            #sleep(1)
+                            self.show_message_box("Login","Authentication successful !!!",QMessageBox.Information)
+                            signin_dialog.close()
                             #return logged_user_id,logged_username,cipher_key
                         else:
-                            print("\nAuthentication failed !!!\nUsername or Password is Incorrect\n")
+                            self.show_message_box("Login Failed","Authentication failed !!!\nUsername or Password is Incorrect",QMessageBox.Critical)
                     else:
-                        print("\n Unrecognized User - Authentication failed !!!")
+                        self.show_message_box("Login Failed", "Unrecognized User \n Authentication failed !!!", QMessageBox.Critical)
                     #sleep(0.7)
                     #return None,None,None
                     
-                #except Error as e:
-                    #print("Error in User Login: ", e)
-                #finally:
+                except Error as e:
+                   self.show_message_box("Login Error","Error in User Login ", QMessageBox.Warning)
+                finally:
                     cursor.close()
                     connection.close()
 
+    def show_message_box(self, title, message, icon):
+        self.msg_box = QMessageBox()
+        self.msg_box.setWindowTitle(title)
+        self.msg_box.setText(message)
+        self.msg_box.setIcon(icon)
+        self.msg_box.exec_()
+
+    def cancel_register(self):
+        register_dialog_obj.username_error_label.hide()
+        register_dialog_obj.password_error_label.hide()
+        register_dialog_obj.confirm_pwd_error_label.hide()
+        register_dialog.close()
+    def cancel_signin(self):
+        signin_dialog_obj.username_error_label.hide()
+        signin_dialog_obj.password_error_label.hide()
+        signin_dialog.close()
 
     def pwd_checkbox_check(self, state):
         # Toggle the echo mode of pwd_input_field1 based on the state of show_password_checkbox1
@@ -264,7 +273,6 @@ class Ui_MainWindow(object):
             register_dialog_obj.pwd_input_field.setEchoMode(QtWidgets.QLineEdit.Normal)
         else:
             register_dialog_obj.pwd_input_field.setEchoMode(QtWidgets.QLineEdit.Password)
-
     def confirm_pwd_checkbox_check(self, state):
         # Toggle the echo mode of pwd_input_field2 based on the state of show_password_checkbox2
         if state == QtCore.Qt.Checked:
@@ -317,8 +325,8 @@ class Ui_MainWindow(object):
             if connection.is_connected():
                 return connection
         except Error as e:
-            #QMessageBox.warning(self, "Connection Error", "Can't connect to Database")
-            print("Error")
+            self.show_message_box("Connection Error", "Can't connect to Database", QMessageBox.Critical)
+            exit
 
     def initialize_database(self):
         self.db_config = {
@@ -358,10 +366,9 @@ class Ui_MainWindow(object):
 
                 connection.commit()
                 self.db_config['database'] = 'passwordmanager'
-                print(self.db_config)
             except Error as e:
-                #QMessageBox.warning(self, "Connection Error", "Can't connect to Database")
-                print("Error")
+                self.show_message_box("Database Error", "Can't Initialize Database", QMessageBox.Critical)
+                exit()
             finally:
                 cursor.close()
                 connection.close()
