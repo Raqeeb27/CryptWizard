@@ -7,17 +7,16 @@ A Python-based password manager designed to help users securely store and manage
 
 The main purpose of this project is to provide an efficient and secure solution for users to store and manage unique passwords for their various accounts, eliminating the need to memorize them.  
 
-## Installation
+## Setup
 
-> Download the project to your local folder
-```
-git clone https://github.com/Raqeeb27/CryptWizard.git
-```
+> Clone the repository
+`git clone https://github.com/Raqeeb27/CryptWizard`
 
-> Install the required python dependencies
-```
-pip install -r requirements.txt
-```
+> Activate the Virtual Environment
+###### Windows
+- `app\scripts\activate.bat`
+###### Linux
+- `source app\scripts\activate`
 
-> Setup a MySQL Database
-Follow this [guide](https://netbeans.apache.org/kb/docs/ide/install-and-configure-mysql-server.html)
+> Run the webapp
+- `python app/manage.py runserver`
