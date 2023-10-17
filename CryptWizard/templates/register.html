@@ -2,11 +2,59 @@
 
 {% block title %}Register |{% endblock title %}
 
+{% block style %}{% endblock style %}
+
 {% block body %}
+<div class="content">
 <h5>New to CryptWizard..??</h5>
-<p>Join us to unlock your inner Wizard. Let the magic flow through you as you take control of your online secrets.</p>
-<button type="button" class="btn btn-primary btn-lg"> Register </button>
-<br>
-<br>
-<p>Ready to harness the power of magic in the digital realm? click <em>Register</em> to unleash the enchanted spell that grants you control over your digital world.</p>
+<p>
+  Join us to unlock your inner Wizard. Let the magic flow through you as you
+  take control of your online secrets.
+</p>
+
+<div class="body">
+  <div class="container">
+    <h2>Registration</h2>
+    <form>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+        <span class="password-toggle" onclick="togglePassword('password')"
+          >Show</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          required
+        />
+        <span
+          class="password-toggle"
+          onclick="togglePassword('confirmPassword')"
+          >Show</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" required />
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Register</button>
+    </form>
+  </div>
+</div>
+<br />
+<br />
+<p>
+  Ready to harness the power of magic in the digital realm? click
+  <em>Register</em> to unleash the enchanted spell that grants you control over
+  your digital world.
+</p>
+</div>
 {% endblock body%}
