@@ -22,6 +22,117 @@
     </title>
     <style>
       {% block style %}{% endblock style %}
+      body {
+        background-image: url(/static/img/starrynight.jpg);
+        background-size: cover;
+        background-attachment: fixed; 
+        background-repeat: no-repeat; 
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;        
+      }      
+      .stars{
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+        0 0 0 8px rgba(255, 255, 255, 0.1),
+        0 0 20px rgba(255, 255, 255, 1);
+        animation: fallingStars 3s linear infinite;
+        pointer-events: none;
+      }
+      .stars::before{
+        content: '';
+        position: fixed;
+        width: 1px;
+        height: 1px;
+        background: linear-gradient(90deg,#fff,tansparent);
+      }
+      @keyframes fallingStars{
+        0%{
+          transform: rotate(315deg) translateX(0);
+          opacity: 1;
+        }
+        100%{
+          transform: rotate(315deg) translateX(-1000px);
+          opacity: 0;
+        }
+      }
+      .stars:nth-child(1){
+        top: 0;
+        right: 0;
+        left: initial;
+        animation-delay: 0;
+        animation-duration: 1s;
+      }
+      .stars:nth-child(2){
+        top: 0;
+        right: 8%;
+        left: initial;
+        animation-delay: 0.3s;
+        animation-duration: 3s;
+      }
+      .stars:nth-child(3){
+        top: 8%;
+        right: 0;
+        left: initial;
+        animation-delay: 0.4s;
+        animation-duration: 2s;
+      }
+      .stars:nth-child(4){
+        top: 0;
+        right: 18%;
+        left: initial;
+        animation-delay: 0.6s;
+        animation-duration: 1.5s;
+      }
+      .stars:nth-child(5){
+        top: 0;
+        right: 40%;
+        left: initial;
+        animation-delay: 0.8s;
+        animation-duration: 2.5s;
+      }
+      .stars:nth-child(6){
+        top: 0px;
+        right: 60%;
+        left: initial;
+        animation-delay: 1s;
+        animation-duration: 3s;
+      }
+      .stars:nth-child(7){
+        top: 30%;
+        right: 0px;
+        left: initial;
+        animation-delay: 1.2s;
+        animation-duration: 1.75s;
+      }
+      .stars:nth-child(8){
+        top: 0px;
+        right: 70%;
+        left: initial;
+        animation-delay: 1.4s;
+        animation-duration: 1.25s;
+      }
+      .stars:nth-child(9){
+        top: 0px;
+        right: 90%;
+        left: initial;
+        animation-delay: 0.75s;
+        animation-duration: 2.25s;
+      }
+      .stars:nth-child(10){
+        top: 0px;
+        right: 45%;
+        left: initial;
+        animation-delay: 2.75s;
+        animation-duration: 2.25s;
+      }
+
       .body {
         font-family: Arial, Helvetica, sans-serif;
         background-color: Dark;
@@ -85,6 +196,27 @@
       .navbar {
         position: relative;
         z-index: 1000;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      
+      .navbar-nav .nav-link {
+        position: relative;
+        text-decoration: none;
+      }
+
+      .navbar-nav .nav-link::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background-color: #fff; 
+        bottom: 0;
+        left: 15%;
+        transition: width 0.4s ease-in-out; 
+      }
+
+      .navbar-nav .nav-link:hover::before {
+        width: 75%;
       }
 
       #navbar-toggler-button {
@@ -101,9 +233,63 @@
         text-align: center;
       }
 
+      #typing-text{
+        margin-top: 70px;
+        font-size: 24px;
+        font-family: monospace;
+      }
+
+      @keyframes shadow-pulse {
+        0% {
+          box-shadow: 0 0 10px rgba(255, 223, 186, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 25px rgba(186, 202, 255, 0.6);
+        }
+        100% {
+          box-shadow: 0 0 10px rgba(255, 223, 186, 0.6);
+        }
+      }
+
+      @keyframes glow {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.12);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      #biglogo{
+        margin-top: 1%;
+        margin-bottom: 1.5%;
+        border-radius: 50%; 
+        object-fit:cover; 
+        width: 80px; 
+        height: 80px;
+        animation: shadow-pulse 2s infinite, glow 6s infinite;
+      }
+
+      .logocontainer{
+        top: 0%;
+        width: 40px;
+        height: 40px;
+        margin-right: 1%;        
+      }
+
+      #logo{
+        width: 100%;
+        height:100%;
+        object-fit:cover;
+        border-radius:50%;
+        animation: shadow-pulse 2.5s infinite;
+      }
+
       .wizard-imgcontainer{        
         top: 0%;
-        margin-right: 1.5%;
         width: 40px;
         height: 40px;
       }
@@ -151,15 +337,15 @@
         }
       }
       @keyframes riseUp {
-    0% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
+        0% {
+          transform: translateY(100%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
       @keyframes slideInFromLeft {
         0%{
           transform: translateX(-100%);
@@ -235,11 +421,17 @@
   </head>
 
   <body class="bg-body-custom">
+    <span>
+      <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
+    </span>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-custom"
       style="width: 100%; position: fixed; top: 0"
     >
       <div class="container-fluid">
+        <div class="logocontainer">
+          <a class="navbar-brand" href="/" id="navCryptWizard"><img src="/static/img/logo.png" alt="Logo" id="logo"></a>
+        </div>
         <a class="navbar-brand" href="/" id="navCryptWizard"> CryptWizard</a>
         <button
           class="navbar-toggler"
@@ -255,7 +447,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul
-            class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex justify-content-center"
+            class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex"
           >
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/"
@@ -305,7 +497,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/signin"
-                  ><i class="bx bxs-user bx-flashing"></i> Signin</a
+                  ><i class="bx bxs-user bx-flashing"></i> Sign in</a
                 >
               </li>
             </ul>
