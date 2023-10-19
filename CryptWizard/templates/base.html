@@ -31,8 +31,11 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;        
-      }      
+        height: 100%;    
+      }
+      .bg-body-custom {
+        color: white;
+      }
       .stars{
         position: fixed;
         width: 4px;
@@ -133,77 +136,18 @@
         animation-duration: 2.25s;
       }
 
-      .body {
-        font-family: Arial, Helvetica, sans-serif;
-        background-color: Dark;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-      }
-
-      .container {
-        background-color: Dark;
-        border: 1px solid #ddd;
-        padding: 20px;
-        width: 300px;
-        text-align: center;
-      }
-
-      .container h2 {
-        margin-bottom: 20px;
-      }
-
-      .form-group {
-        text-align: left;
-        margin-bottom: 10px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      .form-group input[type="text"],
-      .form-group input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-      }
-
-      .password-toggle {
-        position: absolute;
-        top: 0;
-        right: 5px;
-        cursor: pointer;
-      }
-
-      .bg-custom {
-        background-color: #343a40;
-      }
-
-      .bg-body-custom {
-        background-color: #292b2c;
-        color: white;
-      }
-
       .navbar-light .navbar-nav .nav-link {
         color: white;
       }
-
       .navbar {
         position: relative;
         z-index: 1000;
-        background: rgba(0, 0, 0, 0.5);
-      }
-      
+        background: rgba(0, 0, 0, 0.55);
+      }      
       .navbar-nav .nav-link {
         position: relative;
         text-decoration: none;
       }
-
       .navbar-nav .nav-link::before {
         content: "";
         position: absolute;
@@ -214,31 +158,74 @@
         left: 15%;
         transition: width 0.4s ease-in-out; 
       }
-
       .navbar-nav .nav-link:hover::before {
         width: 75%;
       }
-
       #navbar-toggler-button {
         color: wheat;
         animation: magicShadow 5s infinite;
       }
-
       .navbar-light .navbar-brand {
         color: white;
       }
+      body.no-scroll {
+        overflow: hidden;
+      }
+      .logocontainer{
+        display: flex;
+        align-items: center;
+        top: 0%;
+        width: 200px;
+        height: 40px;        
+      }
+      #logo{
+        width: 120%;
+        height:120%;
+        object-fit:cover;
+        border-radius:50%;
+        animation: shadow-pulse 2.5s infinite;
+      }
+      #navCryptWizard {
+        font-family: "High Tower Text", serif;
+        animation: magicShadow 6s infinite;
+        font-style: italic;
+        font-size: 160%;
+      }
+      .wizard-imgcontainer{        
+        top: 0%;
+        width: 40px;
+        height: 40px;
+      }
+      #wizardimg{        
+        width: 100%;
+        height:100%;
+        object-fit:cover;
+        border-radius:50%;
+      }
 
+      
       .content {
         margin-top: 90px;
         text-align: center;
+        align-items: center;
+        justify-content: center;
       }
-
-      #typing-text{
-        margin-top: 70px;
-        font-size: 24px;
-        font-family: monospace;
+      #welcome {
+        padding-right: 40%;
+        font-size: 180%;
+        animation: slideInFromLeft 0.5s ease-in;
+        font-style: italic;
+        margin-bottom: 30px;
       }
-
+      #biglogo{
+        margin-top: 1%;
+        margin-bottom: 1.5%;
+        border-radius: 50%; 
+        object-fit:cover; 
+        width: 80px; 
+        height: 80px;
+        animation: shadow-pulse 2s infinite, glow 6s infinite;
+      }
       @keyframes shadow-pulse {
         0% {
           box-shadow: 0 0 10px rgba(255, 223, 186, 0.6);
@@ -250,7 +237,6 @@
           box-shadow: 0 0 10px rgba(255, 223, 186, 0.6);
         }
       }
-
       @keyframes glow {
         0% {
           transform: scale(1);
@@ -262,78 +248,31 @@
           transform: scale(1);
         }
       }
-
-      #biglogo{
-        margin-top: 1%;
-        margin-bottom: 1.5%;
-        border-radius: 50%; 
-        object-fit:cover; 
-        width: 80px; 
-        height: 80px;
-        animation: shadow-pulse 2s infinite, glow 6s infinite;
-      }
-
-      .logocontainer{
-        top: 0%;
-        width: 40px;
-        height: 40px;
-        margin-right: 1%;        
-      }
-
-      #logo{
-        width: 100%;
-        height:100%;
-        object-fit:cover;
-        border-radius:50%;
-        animation: shadow-pulse 2.5s infinite;
-      }
-
-      .wizard-imgcontainer{        
-        top: 0%;
-        width: 40px;
-        height: 40px;
-      }
-
-      #wizardimg{        
-        width: 100%;
-        height:100%;
-        object-fit:cover;
-        border-radius:50%;
-      }
-
       @keyframes magicShadow {
         0%,
         100% {
           text-shadow: 0 0 20px rgba(255, 223, 186, 0.6),
             0 0 20px rgba(186, 202, 255, 0.6);
         }
-
         20% {
           text-shadow: 0 0 20px rgba(255, 223, 186, 0.6),
             0 0 30px rgba(255, 255, 186, 0.6), 0 0 30px rgba(255, 186, 255, 0.6);
-          color: #ffd4a6;
-          /* Golden color */
+          color: #ffd4a6;          /* Golden color */
         }
-
         40% {
           text-shadow: 0 0 20px rgba(255, 255, 186, 0.6),
             0 0 30px rgba(186, 186, 255, 0.6), 0 0 30px rgba(255, 186, 255, 0.6);
-          color: white;
-          /* White text */
+          color: white;          /* White text */
         }
-
         60% {
           text-shadow: 0 0 20px rgba(186, 186, 255, 0.6),
             0 0 30px rgba(255, 186, 202, 0.6), 0 0 30px rgba(255, 186, 255, 0.6);
-          color: #bebebe;
-          /* Silver color */
+          color: #bebebe;          /* Silver color */
         }
-
         80% {
           text-shadow: 0 0 20px rgba(255, 186, 202, 0.6),
             0 0 30px rgba(255, 223, 186, 0.6), 0 0 30px rgba(255, 186, 255, 0.6);
-          color: white;
-          /* White text */
+          color: white;          /* White text */
         }
       }
       @keyframes riseUp {
@@ -378,27 +317,12 @@
           transform: translateY(0);
         }
       }
-
       #CryptWizard {
         font-size: 350%;
         animation: slideInFromTop 0.8s ease-in,  magicShadow 6.5s infinite;
         font-family: "High Tower Text", serif;
-        font-style: italic;
-        
-      }
-
-      #navCryptWizard {
-        font-family: "High Tower Text", serif;
-        animation: magicShadow 6s infinite;
-        font-style: italic;
-        font-size: 160%;
-      }
-      #welcome {
-        padding-right: 40%;
-        font-size: 180%;
-        animation: slideInFromLeft 0.5s ease-in;
-      }
-
+        font-style: italic;        
+      }    
       #PasswordManager {
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         font-size: 230%;
@@ -413,9 +337,140 @@
         z-index: 1;
         animation: slideInFromRight 0.5s ease-in;
       }
+      #typing-text{
+        margin-top: 70px;
+        font-size: 24px;
+        font-family: monospace;
+      }
+      
 
-      body.no-scroll {
-        overflow: hidden;
+      #newtoCW{
+        font-family: "High Tower Text";
+        font-weight: 600;
+        font-size: 30px;
+        margin-right: 2%;
+      }
+      @media (min-width: 630px) {
+        #newtoCW {
+          margin-right: 40%;
+        }
+      }
+      #registerbox-abovetext{
+        margin-top: 20px;
+        font-size: 150%;
+        margin-bottom: 50px;
+      }
+      .register-box {
+        border: 1px solid #ddd;
+        padding: 65px;
+        width: 400px;
+        height: 720px;
+        text-align: center;
+        background-color: transparent;
+        border: 2px solid rgba(255, 255, 255, .5);
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        margin: 0 auto;
+        animation: shadow-pulse 5s infinite;
+      }
+      .register-box h2{
+        font-size: 2.5em;
+        color: #fff;
+        text-align: center;
+        font-family: "High Tower text";
+        font-style: italic;
+      }
+      .input-box{
+        position: relative;
+        width: 310px;
+        margin: 30px 0;
+        border-bottom: 2px solid #fff;
+      }
+      .input-box label{
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        font-size: 1em;
+        color: #fff;
+        pointer-events: none;
+        transition: .5s;
+        font-weight: 600;
+      }
+      .input-box input:focus~label,
+      .input-box input:valid~label{
+        top: -5px;
+      }
+      .input-box input{
+        width: 100%;
+        height: 50px;
+        background: transparent;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-size: 1em;
+        color: #fff;
+        padding: 0 35px 0 5px;
+      }
+      .input-box .icon{
+        position: absolute;
+        right: 8px;
+        color: #fff;
+        font-size: 1.2em;
+        line-height: 57px;
+      }
+      .registerButton{
+        width: 90%;
+        height: 40px;
+        background: #fff;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 25px;
+        color: #000;
+        font-weight: 600;
+        font-family: "High Tower Text",sans-serif;
+        font-style: italic;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .register-link{
+        font-size: .96em;
+        color: #fff;
+        text-align: center;
+        margin: 25px 0 10px;
+      }
+      .register-link p a{
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .register-link p a:hover{
+        text-decoration: underline;
+      }
+      @media (max-width: 360px){
+        .register-box{
+          width: 100%;
+        }
+        .input-box{
+          width: 290px;
+        }
+      }
+      #registerbox-belowtext1{
+        margin-top: 50px;
+        font-size: 195%;
+        margin-bottom: 10px;
+        font-family: "High Tower Text";
+        font-style: italic;
+      }
+      #registerbox-belowtext2{
+        margin-top: 20px;
+        font-size: 150%;
+        margin-bottom: 50px;
       }
     </style>
   </head>
@@ -431,8 +486,8 @@
       <div class="container-fluid">
         <div class="logocontainer">
           <a class="navbar-brand" href="/" id="navCryptWizard"><img src="/static/img/logo.png" alt="Logo" id="logo"></a>
-        </div>
-        <a class="navbar-brand" href="/" id="navCryptWizard"> CryptWizard</a>
+          <a class="navbar-brand" href="/" id="navCryptWizard"> CryptWizard</a>
+        </div>        
         <button
           class="navbar-toggler"
           type="button"
@@ -497,7 +552,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/signin"
-                  ><i class="bx bxs-user bx-flashing"></i> Sign in</a
+                  ><i class="bx bxs-user bx-flashing"></i> Sign in </a
                 >
               </li>
             </ul>
@@ -509,11 +564,8 @@
       </div>
     </nav>
     {% block body %} {% endblock body %}
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
 
       function togglePassword(inputId) {
         const input = document.getElementById(inputId);

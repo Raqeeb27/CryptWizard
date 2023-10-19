@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 {% block title %}Register |{% endblock title %}
 
@@ -6,55 +6,60 @@
 
 {% block body %}
 <div class="content">
-<h5>New to CryptWizard..??</h5>
-<p>
-  Join us to unlock your inner Wizard. Let the magic flow through you as you
-  take control of your online secrets.
-</p>
-
-<div class="body">
-  <div class="container">
-    <h2>Registration</h2>
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
-        <span class="password-toggle" onclick="togglePassword('password')"
-          >Show</span
-        >
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          required
-        />
-        <span
-          class="password-toggle"
-          onclick="togglePassword('confirmPassword')"
-          >Show</span
-        >
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" required />
-      </div>
-      <button type="submit" class="btn btn-primary btn-lg">Register</button>
-    </form>
+  <h5 id="newtoCW">New to CryptWizard..??</h5>
+  <p id="registerbox-abovetext">
+    <em
+      >Join us to Unleash your Inner Wizard. Let the Magic flow through you as
+      you take control of your online secrets</em
+    >.
+  </p>
+  <div>
+    <div class="register-box">
+      <form action="" id="registration-form">
+        <h2>Registration</h2>
+        <div class="input-box">
+          <span class="icon"><i class="bx bx-user"></i></span>
+          <input type="text" required />
+          <label for="">Username</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><i class="bx bxs-envelope"></i></span>
+          <input type="text" required />
+          <label for="">Email</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><i class="bx bxs-lock-alt"></i></span>
+          <input type="password" required />
+          <label for="">Password</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><i class="bx bx-lock-alt"></i></span>
+          <input type="password" required />
+          <label for="">Confirm Password</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><i class="bx bxs-phone"></i></span>
+          <input type="text" required />
+          <label for="">Phone Number</label>
+        </div>
+        <button type="submit" class="registerButton">Register</button>
+        <div class="register-link">
+          <p>
+            Already have an account?<br />Ready to unlock your <em>magical vault?</em><br /><a
+              href="/signin"
+              >Sign in</a
+            >
+          </p>
+        </div>
+      </form>
+    </div>
   </div>
+  <p id="registerbox-belowtext1">
+    Ready to harness the power of magic in the digital realm?
+  </p>
+  <p id="registerbox-belowtext2">
+    Click <em>Register</em> to unleash the enchanted spell that grants you control
+    over your digital world.
+  </p>
 </div>
-<br />
-<br />
-<p>
-  Ready to harness the power of magic in the digital realm? click
-  <em>Register</em> to unleash the enchanted spell that grants you control over
-  your digital world.
-</p>
-</div>
-{% endblock body%}
+{% endblock body %}
