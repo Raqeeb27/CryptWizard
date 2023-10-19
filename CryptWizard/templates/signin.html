@@ -7,11 +7,39 @@
 {% block body %}
 <div class="content">
     <h5 id="mightyWizard">Welcome back Mighty Wizard!</h5>
-    <p>Incant your way your world of mystery and enchantment. Unlock the portal to your digital kingdom, into the mystical world of secure password management.</p>
-    <p>Let the enchantment begin....!!!</p>
-    <button type="button" class="btn btn-primary btn-lg"> Signin </button>
-
-    <p>Click to unleash the enchanted spell that grants you control over your secure digital realm.</p>
-    <p>Your digital secrets await your command.....</p>
+    <p id="signinbox-abovetext1">Unlock the portal to your digital kingdom, into the mystical world of secure password management.</p>
+    <p id="signinbox-abovetext2">Let the enchantment begin....!!!</p>
+    <div>
+        <div class="signin-box">
+          <form action="">
+            <h2>Sign in</h2>
+            <div class="input-box">
+              <span class="icon"><i class='bx bxs-user'></i></span>
+              <input type="text" required />
+              <label for="">Username</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"><i class="bx bxs-lock-alt"></i></span>
+              <input type="password" required />
+              <label for="">Password</label>
+            </div>
+            <div class="remember-forgot">
+                <label for=""><input type="checkbox"> Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit" class="signinButton">Sign in</button>
+            <div class="signin-link">
+              <p>
+                Don't have an account?<br /><em>Ready to unleash your Inner Wizard?</em><br /><a
+                  href="/register"
+                  >Register</a
+                >
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    <p id="signinbox-belowtext1">Click to unleash the enchanted spell that grants you control over your secure digital realm.</p>
+    <p id="signinbox-belowtext2">Your digital secrets await your command.....</p>
 </div>
 {% endblock body%}

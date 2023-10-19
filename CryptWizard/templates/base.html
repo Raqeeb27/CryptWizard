@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-
+    <link rel="shortcut icon" type="x-icon" href="/static/img/web-icon.png">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -136,14 +136,20 @@
         animation-duration: 2.25s;
       }
 
+
       .navbar-light .navbar-nav .nav-link {
         color: white;
       }
       .navbar {
         position: relative;
         z-index: 1000;
-        background: rgba(0, 0, 0, 0.55);
-      }      
+        background: rgba(0, 0, 0, 0.5);
+      }
+      @media (max-width: 992px) {
+        .navbar {
+          background: rgba(0, 0, 0, 0.8);
+        }     
+      }
       .navbar-nav .nav-link {
         position: relative;
         text-decoration: none;
@@ -162,11 +168,35 @@
         width: 75%;
       }
       #navbar-toggler-button {
-        color: wheat;
-        animation: magicShadow 5s infinite;
+        padding-left:0;
+        padding-right:0;
+        border-color: #fff;
+        background-color: transparent;
+        animation: shadow-pulse 5s infinite;
+      }
+      @media (max-width: 992px) {
+        .toggler-wizard{
+          position: fixed;
+          top: 0;
+          right: 0;
+          padding: 10px;
+        }
+        .wizardimgcontainer-bigscreen{
+        display: none;
+        user-select: none; 
+        pointer-events: none;          
+        }  
+      }
+      @media (min-width: 992px) {
+      .wizardimgcontainer-smallscreen{        
+        display: none;
+        user-select: none; 
+        pointer-events: none;          
+        }
       }
       .navbar-light .navbar-brand {
         color: white;
+        margin-right: 0;
       }
       body.no-scroll {
         overflow: hidden;
@@ -179,8 +209,8 @@
         height: 40px;        
       }
       #logo{
-        width: 120%;
-        height:120%;
+        width: 78%;
+        height:78%;
         object-fit:cover;
         border-radius:50%;
         animation: shadow-pulse 2.5s infinite;
@@ -189,14 +219,25 @@
         font-family: "High Tower Text", serif;
         animation: magicShadow 6s infinite;
         font-style: italic;
-        font-size: 160%;
+        font-size: 165%;
       }
-      .wizard-imgcontainer{        
+      .wizardimgcontainer-smallscreen{        
         top: 0%;
         width: 40px;
         height: 40px;
       }
-      #wizardimg{        
+      #wizardimg-smallscreen{        
+        width: 100%;
+        height:100%;
+        object-fit:cover;
+        border-radius:50%;
+      }
+      .wizardimgcontainer-bigscreen{        
+        top: 0%;
+        width: 40px;
+        height: 40px;
+      }
+      #wizardimg-bigscreen{        
         width: 100%;
         height:100%;
         object-fit:cover;
@@ -225,6 +266,12 @@
         width: 80px; 
         height: 80px;
         animation: shadow-pulse 2s infinite, glow 6s infinite;
+      }
+      @media (min-width: 630px) {
+        #biglogo {
+          width: 120px; 
+          height: 120px;
+        }
       }
       @keyframes shadow-pulse {
         0% {
@@ -319,10 +366,15 @@
       }
       #CryptWizard {
         font-size: 350%;
-        animation: slideInFromTop 0.8s ease-in,  magicShadow 6.5s infinite;
+        animation: slideInFromTop 0.8s ease-in, magicShadow 6.5s infinite;
         font-family: "High Tower Text", serif;
         font-style: italic;        
-      }    
+      }
+      @media (min-width: 690px) {
+        #CryptWizard {
+          font-size: 400%;
+        }
+      }
       #PasswordManager {
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         font-size: 230%;
@@ -348,7 +400,9 @@
         font-family: "High Tower Text";
         font-weight: 600;
         font-size: 30px;
+        color: wheat;
         margin-right: 2%;
+        animation: slideInFromLeft 0.5s ease-in;
       }
       @media (min-width: 630px) {
         #newtoCW {
@@ -374,7 +428,15 @@
         align-items: center;
         backdrop-filter: blur(10px);
         margin: 0 auto;
-        animation: shadow-pulse 5s infinite;
+        animation: animateBg 2s linear infinite, shadow-pulse 5s infinite;
+      }
+      @keyframes animateBg{
+        0%,100% {
+          filter: hue-rotate(0deg);
+        }
+        50% {
+          filter: hue-rotate(9deg);
+        }
       }
       .register-box h2{
         font-size: 2.5em;
@@ -438,6 +500,16 @@
         margin-top: 10px;
         margin-bottom: 10px;
       }
+      .registerButton:hover {
+        background-color: rgba(7, 46, 98, 0.4);
+        color: wheat;
+        animation: shadow-pulse 6.5s infinite;
+      }
+      .registerButton:active {
+        transform: scale(0.95);
+        box-shadow: none; 
+        transition: transform 0.2s, box-shadow 0.2s; 
+      }
       .register-link{
         font-size: .96em;
         color: #fff;
@@ -466,18 +538,164 @@
         margin-bottom: 10px;
         font-family: "High Tower Text";
         font-style: italic;
+        animation: magicShadow 6s infinite;
       }
       #registerbox-belowtext2{
         margin-top: 20px;
         font-size: 150%;
         margin-bottom: 50px;
       }
+
+      
+      #mightyWizard{
+        font-family: "High Tower Text";
+        font-weight: 600;
+        font-size: 195%;
+        color: whitesmoke;
+        font-style: italic;
+        margin-right: 2%;
+        margin-bottom: 20px;
+        animation: smallToBig 0.35s ease-in;
+      }
+      @media (min-width: 630px) {
+        #mightyWizard {
+          margin-right: 40%;
+        }
+      }
+      @keyframes smallToBig{
+        0%{
+          transform: scale(1);
+          opacity: 0;
+        }
+        1%{
+          transform: scale(0);
+          opacity: 1;
+        }
+        100%{
+          transform: scale(1);
+        }
+      }
+      #signinbox-abovetext1{
+        font-size: x-large;
+        font-style: italic;
+        margin-top: 10px;
+      }
+      #signinbox-abovetext2{
+        font-size: xx-large;
+        font-style: italic;
+        font-family: "High Tower Text";
+        margin-bottom: 30px;
+        animation: magicShadow 6s infinite;
+      }
+      .signin-box {
+        border: 1px solid #ddd;
+        padding: 65px;
+        width: 400px;
+        height: 500px;
+        text-align: center;
+        background-color: transparent;
+        border: 2px solid rgba(255, 255, 255, .5);
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        margin: 0 auto;
+        animation: animateBg 2s linear infinite, shadow-pulse 5s infinite;
+      }
+      .signin-box h2{
+        font-size: 2.5em;
+        color: #fff;
+        text-align: center;
+        font-family: "High Tower text";
+        font-style: italic;
+      }
+      .remember-forgot{
+        margin: -15px 0 15px;
+        font-size: 1em;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+      }
+      .remember-forgot label input{
+        margin-right: 3px;
+      }
+      .remember-forgot a{
+        color: #fff;
+        text-decoration: none;
+      }
+      .remember-forgot a:hover{
+        text-decoration: underline;
+      }
+      .signinButton{
+        width: 90%;
+        height: 40px;
+        background: #fff;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 25px;
+        color: #000;
+        font-weight: 600;
+        font-family: "High Tower Text",sans-serif;
+        font-style: italic;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .signinButton:hover {
+        background-color: rgba(7, 46, 98, 0.4);
+        color: wheat;
+        animation: shadow-pulse 6.5s infinite;
+      }
+      .signinButton:active {
+        transform: scale(0.95);
+        box-shadow: none; 
+        transition: transform 0.2s, box-shadow 0.2s; 
+      }
+      .signin-link{
+        font-size: .96em;
+        color: #fff;
+        text-align: center;
+        margin: 25px 0 10px;
+      }
+      .signin-link p a{
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .signin-link p a:hover{
+        text-decoration: underline;
+      }
+      @media (max-width: 360px){
+        .signin-box{
+          width: 100%;
+        }
+        .input-box{
+          width: 290px;
+        }
+      }
+      #signinbox-belowtext1{
+        margin-top: 50px;
+        font-size: 155%;
+        margin-bottom: 10px;
+        font-style: italic;
+      }
+      #signinbox-belowtext2{
+        margin-top: 20px;
+        font-size: 150%;
+        margin-bottom: 50px;
+        font-style: italic;
+        font-family: 'Times New Roman', Times, serif;
+        color: wheat
+      }
     </style>
   </head>
 
   <body class="bg-body-custom">
     <span>
-      <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
+      <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
+      <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
     </span>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-custom"
@@ -487,7 +705,8 @@
         <div class="logocontainer">
           <a class="navbar-brand" href="/" id="navCryptWizard"><img src="/static/img/logo.png" alt="Logo" id="logo"></a>
           <a class="navbar-brand" href="/" id="navCryptWizard"> CryptWizard</a>
-        </div>        
+        </div>     
+        <div class="toggler-wizard d-flex align-items-center">
         <button
           class="navbar-toggler"
           type="button"
@@ -500,9 +719,12 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+        <span class="wizardimgcontainer-smallscreen">
+          <a href="/static/img/wizard.jpg" target="_blank"><img src="/static/img/wizard.jpg" alt="Blank Image" id="wizardimg-smallscreen"></a>
+        </span></div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul
-            class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex"
+            class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex align-items-center"
           >
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/"
@@ -558,8 +780,8 @@
             </ul>
           </span>
         </div>
-        <span class="wizard-imgcontainer">
-          <a href="/static/img/wizard.jpg" target="_blank"><img src="/static/img/wizard.jpg" alt="Blank Image" id="wizardimg"></a>
+        <span class="wizardimgcontainer-bigscreen">
+          <a href="/static/img/wizard.jpg" target="_blank"><img src="/static/img/wizard.jpg" alt="Blank Image" id="wizardimg-bigscreen"></a>
         </span>
       </div>
     </nav>
