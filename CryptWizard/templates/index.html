@@ -3,7 +3,58 @@
 {% block title %}Home |{% endblock title %} 
 
 {% block style %}
-
+#welcome {
+  padding-right: 40%;
+  font-size: 180%;
+  animation: slideInFromLeft 0.5s ease-in;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+#biglogo{
+  margin-top: 1%;
+  margin-bottom: 1.5%;
+  border-radius: 50%; 
+  object-fit:cover; 
+  width: 80px; 
+  height: 80px;
+  animation: shadow-pulse 2s infinite, glow 6s infinite;
+}
+@media (min-width: 630px) {
+  #biglogo {
+    width: 120px; 
+    height: 120px;
+  }
+}
+#CryptWizard {
+  font-size: 350%;
+  animation: slideInFromTop 0.8s ease-in, magicShadow 6.5s infinite;
+  font-family: "High Tower Text", serif;
+  font-style: italic;        
+}
+@media (min-width: 690px) {
+  #CryptWizard {
+    font-size: 400%;
+  }
+}
+#PasswordManager {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-size: 230%;
+  font-family: "Poppins", sans-serif;
+  margin-top: 15px;
+  animation: riseUp 0.8s forwards;
+}
+.priority {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  animation: slideInFromRight 0.5s ease-in;
+}
+#typing-text{
+  margin-top: 70px;
+  font-size: 24px;
+  font-family: monospace;
+}
 {% endblock style %}
 
 {% block body %}
@@ -134,9 +185,6 @@
 <a href="/signin"
   ><button type="button" class="btn btn-primary btn-lg">Sign in</button></a
 >
-<a href="/signin"
-  ><button type="button" class="btn btn-success">Sign in</button></a
->
 <p>
   Ready to harness the power of Magical Encryption? Unlock the door to a world
   of digital enchantment. Register now and embark on a magical journey to
@@ -144,9 +192,6 @@
 </p>
 <a href="/register"
   ><button type="button" class="btn btn-primary btn-lg">Register</button></a
->
-<a href="/register"
-  ><button type="button" class="btn btn-success">Register</button></a
 >
 </div>
 {% endblock body %}

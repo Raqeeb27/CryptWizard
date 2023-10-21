@@ -2,7 +2,111 @@
 
 {% block title %}Register |{% endblock title %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+#newtoCW{
+  font-family: "High Tower Text";
+  font-weight: 600;
+  font-size: 30px;
+  color: wheat;
+  margin-right: 2%;
+  animation: slideInFromLeft 0.5s ease-in;
+}
+@media (min-width: 630px) {
+  #newtoCW {
+    margin-right: 40%;
+  }
+}
+#registerbox-abovetext{
+  margin-top: 20px;
+  font-size: 150%;
+  margin-bottom: 50px;
+}
+.register-box {
+  border: 1px solid #ddd;
+  padding: 65px;
+  width: 400px;
+  height: 720px;
+  text-align: center;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  margin: 0 auto;
+  animation: shadow-pulse 3s infinite, animateBg 2s linear infinite;
+}
+.register-box h2{
+  font-size: 2.5em;
+  color: #fff;
+  text-align: center;
+  font-family: "High Tower text";
+  font-style: italic;
+}
+.registerButton{
+  width: 90%;
+  height: 40px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 25px;
+  color: #000;
+  font-weight: 600;
+  font-family: "High Tower Text",sans-serif;
+  font-style: italic;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.registerButton:hover {
+  background-color: rgba(7, 46, 98, 0.4);
+  color: wheat;
+  animation: shadow-pulse 4.5s infinite;
+}
+.registerButton:active {
+  transform: scale(0.95);
+  box-shadow: none; 
+  transition: transform 0.2s, box-shadow 0.2s; 
+}
+.register-link{
+  font-size: .96em;
+  color: #fff;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+.register-link p a{
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.15em;
+}
+.register-link p a:hover{
+  text-decoration: underline;
+}
+@media (max-width: 360px){
+  .register-box{
+    width: 100%;
+  }
+  .input-box{
+    width: 290px;
+  }
+}
+#registerbox-belowtext1{
+  margin-top: 50px;
+  font-size: 195%;
+  margin-bottom: 10px;
+  font-family: "High Tower Text";
+  font-style: italic;
+  animation: magicShadow 6s infinite;
+}
+#registerbox-belowtext2{
+  margin-top: 20px;
+  font-size: 150%;
+  margin-bottom: 50px;
+}
+{% endblock style %}
 
 {% block body %}
 <div class="content">
