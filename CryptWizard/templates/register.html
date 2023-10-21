@@ -132,13 +132,13 @@
           <label for="">Email</label>
         </div>
         <div class="input-box">
-          <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-          <input type="password" required />
+          <span class="icon" id="passwordToggle"><i class="bx bxs-lock-alt"></i></span>
+          <input type="password" required id="passwordInput"/>
           <label for="">Password</label>
         </div>
         <div class="input-box">
-          <span class="icon"><i class="bx bx-lock-alt"></i></span>
-          <input type="password" required />
+          <span class="icon" id="confirmPasswordToggle"><i class="bx bx-lock-alt"></i></span>
+          <input type="password" required id="confirmPasswordInput"/>
           <label for="">Confirm Password</label>
         </div>
         <div class="input-box">
@@ -167,3 +167,7 @@
   </p>
 </div>
 {% endblock body %}
+
+{% block script %}
+
+{% endblock script %} 

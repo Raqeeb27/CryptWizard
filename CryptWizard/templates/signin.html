@@ -150,8 +150,8 @@
               <label for="">Username</label>
             </div>
             <div class="input-box">
-              <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-              <input type="password" required />
+              <span class="icon" id="passwordToggle"><i class="bx bxs-lock-alt"></i></span>
+              <input type="password" required id="passwordInput"/>
               <label for="">Password</label>
             </div>
             <div class="remember-forgot">
@@ -174,3 +174,7 @@
     <p id="signinbox-belowtext2">Your digital secrets await your command.....</p>
 </div>
 {% endblock body%}
+
+{% block script %}
+
+{% endblock script %} 

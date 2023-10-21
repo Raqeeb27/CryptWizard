@@ -197,5 +197,8 @@
 {% endblock body %}
 
 {% block script %}
-
+function clickNextButton() {
+  document.querySelector('[data-bs-target="#carouselExampleCaptions"][data-bs-slide="next"]').click();
+}
+setInterval(clickNextButton, 4000);
 {% endblock script %} 
