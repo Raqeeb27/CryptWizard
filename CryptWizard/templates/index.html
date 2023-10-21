@@ -28,8 +28,7 @@
 #CryptWizard {
   font-size: 350%;
   animation: slideInFromTop 0.8s ease-in, magicShadow 6.5s infinite;
-  font-family: "High Tower Text", serif;
-  font-style: italic;        
+  font-family: HighTowerText_Italic;    
 }
 @media (min-width: 690px) {
   #CryptWizard {
@@ -198,6 +197,10 @@
 
 {% block script %}
 function clickNextButton() {
+  const navbar = document.getElementById("navbarSupportedContent");
+  if (navbar.classList.contains("show")) {
+    return;
+  }
   document.querySelector('[data-bs-target="#carouselExampleCaptions"][data-bs-slide="next"]').click();
 }
 setInterval(clickNextButton, 4000);

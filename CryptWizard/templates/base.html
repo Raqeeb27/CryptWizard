@@ -22,6 +22,14 @@
       {% block title %}{% endblock title %} CryptWizard - Password Manager
     </title>
     <style>
+      @font-face {
+        font-family: HighTowerText_Regular;
+        src: url('/static/fonts/HTOWERT.TTF');
+      }
+      @font-face {
+        font-family: HighTowerText_Italic;
+        src: url('/static/fonts/HTOWERTI.TTF');
+      }
       {% block style %}{% endblock style %}
       body {
         background-image: url(/static/img/starrynight.jpg);
@@ -331,12 +339,10 @@
         height:78%;
         object-fit:cover;
         border-radius:50%;
-        animation: shadow-pulse 2.5s infinite;
       }
       #navCryptWizard {
-        font-family: "High Tower Text", serif;
+        font-family: HighTowerText_Italic;
         animation: magicShadow 6s infinite;
-        font-style: italic;
         font-size: 170%;
       }
       .wizardimgcontainer-smallscreen{        
@@ -401,10 +407,9 @@
         border-radius: 50%;
       }
       #cryptwizard-footer{
-        font-family: "High Tower Text";
+        font-family: HighTowerText_Italic;
         font-size: 180%;
         color: #fff;
-        font-style: italic;
         animation: magicShadow 5s infinite;
       }
       .footer-content .footer-top{
@@ -440,7 +445,6 @@
       }
       .footer-top .media-icons a:nth-child(4){
         background-color: #171515;
-        animation: shadow-pulse 5s infinite;
       }
       .footer-content .footer-middle{
         display: flex;
@@ -461,8 +465,7 @@
         font-weight: 400;
         margin-bottom: 15px;
         position: relative;
-        font-style: italic;
-        font-family: "High Tower Text";
+        font-family: HighTowerText_Italic;
       }
       .link-boxes .box .link_name::before{
         content: '';
@@ -760,11 +763,24 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-    document
-      .getElementById("navbar-toggler-button")
-        .addEventListener("click", function () {
-          document.body.classList.toggle("no-scroll");
-        });
+      document
+        .getElementById("navbar-toggler-button")
+          .addEventListener("click", function () {
+            document.body.classList.toggle("no-scroll");
+          });
+      function closeNavbar() {
+        const navbar = document.getElementById("navbarSupportedContent");
+        if (navbar.classList.contains("show")) {
+          navbar.classList.remove("show");
+          document.body.classList.remove("no-scroll");
+        }
+      }
+      document.addEventListener("click", function (event) {
+        const navbar = document.getElementById("navbar-toggler-button");
+        if (!event.target.closest(".navbar") && event.target !== navbar) {
+          closeNavbar();
+        }
+      });
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
