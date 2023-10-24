@@ -25,7 +25,7 @@
   border: 1px solid #ddd;
   padding: 65px;
   width: 400px;
-  height: 720px;
+  height: 820px;
   text-align: center;
   background-color: transparent;
   border: 2px solid rgba(255, 255, 255, .5);
@@ -106,7 +106,6 @@
 {% endblock style %}
 
 {% block body %}
-<div class="content">
   <h5 id="newtoCW">New to CryptWizard..??</h5>
   <p id="registerbox-abovetext">
     <em
@@ -116,7 +115,7 @@
   </p>
   <div>
     <div class="register-box">
-      <form method="post" action="/register">
+      <form method="post" action="/register/">
       {% csrf_token %}
         <h2>Registration</h2>
         <div class="input-box">
@@ -125,8 +124,18 @@
           <label for="username">Username</label>
         </div>
         <div class="input-box">
+          <span class="icon"><i class='bx bxs-user-detail' ></i></span>
+          <input type="text" name="firstname" required />
+          <label for="firstname">First Name</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><i class='bx bxs-user-detail' ></i></span>
+          <input type="text" name="lastname" required />
+          <label for="lastname">Last Name</label>
+        </div>
+        <div class="input-box">
           <span class="icon"><i class="bx bxs-envelope"></i></span>
-          <input type="email" name="email" required />
+          <input type="text" name="email" required />
           <label for="email">Email</label>
         </div>
         <div class="input-box">
@@ -138,11 +147,6 @@
           <span class="icon" id="confirmPasswordToggle"><i class="bx bx-lock-alt"></i></span>
           <input type="password" id="confirmPasswordInput" name="confirm_password" required />
           <label for="confirm_password">Confirm Password</label>
-        </div>
-        <div class="input-box">
-          <span class="icon"><i class="bx bxs-phone"></i></span>
-          <input type="text" name="phone_number" id="phone" required />
-          <label for="phone_number">Phone Number</label>
         </div>
         <button type="submit" class="registerButton">Register</button>
         <div class="register-link">
@@ -163,7 +167,6 @@
     Click <em>Register</em> to unleash the enchanted spell that grants you control
     over your digital world.
   </p>
-</div>
 {% endblock body %}
 
 {% block script %}

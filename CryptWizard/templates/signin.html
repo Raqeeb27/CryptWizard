@@ -132,22 +132,22 @@
 {% endblock style %}
 
 {% block body %}
-<div class="content">
     <h5 id="mightyWizard">Welcome back Mighty Wizard!</h5>
     <p id="signinbox-abovetext1">Unlock the portal to your digital kingdom, into the mystical world of secure password management.</p>
     <p id="signinbox-abovetext2">Let the enchantment begin....!!!</p>
     <div>
         <div class="signin-box">
-          <form action="">
+          <form action="/dashboard/" method="post">
+          {% csrf_token %}
             <h2>Sign in</h2>
             <div class="input-box">
               <span class="icon"><i class='bx bxs-user'></i></span>
-              <input type="text" id="username" required />
-              <label for="username">Username</label>
+              <input type="text" id="email" name="email" required />
+              <label for="email">Username</label>
             </div>
             <div class="input-box">
               <span class="icon" id="passwordToggle"><i class="bx bxs-lock-alt"></i></span>
-              <input type="password" required id="passwordInput"/>
+              <input type="password" name="password" required id="passwordInput"/>
               <label for="password">Password</label>
             </div>
             <div class="remember-forgot">
@@ -168,7 +168,6 @@
       </div>
     <p id="signinbox-belowtext1">Click to unleash the enchanted spell that grants you control over your secure digital realm.</p>
     <p id="signinbox-belowtext2">Your digital secrets await your command.....</p>
-</div>
 {% endblock body%}
 
 {% block script %}

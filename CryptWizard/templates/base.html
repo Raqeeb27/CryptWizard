@@ -374,6 +374,12 @@
         justify-content: center;
       }
 
+      .alert{
+        position: absolute;
+        top:65px;
+        width:100%;
+      }
+
 
       footer{
         background: transparent;
@@ -726,7 +732,19 @@
         </span>
       </div>
     </nav>
-    {% block body %} {% endblock body %}
+    
+    <div class="content">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% block body %} {% endblock body %}
+    </div>
+
     <footer>
       <div class="footer-content">
         <div class="footer-top">

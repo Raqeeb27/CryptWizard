@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard |{% endblock title %}
+
+{% block style %}
+#logoutButton{
+    float:right;
+}
+{% endblock style %}
+
+{% block body %}
+    <button type="button" id="logoutButton" onclick="location.href='{% url 'log' %}'">Logout</button>
+    <h2>Dashboard</h2>
+    <h4>Welcome {{e}}!</h4>
+{% endblock body %}
+
+{% block script %}
+
+{% endblock script %} 
