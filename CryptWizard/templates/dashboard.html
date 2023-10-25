@@ -11,7 +11,22 @@
 {% block body %}
     <button type="button" id="logoutButton" onclick="location.href='{% url 'log' %}'">Logout</button>
     <h2>Dashboard</h2>
-    <h4>Welcome {{e}}!</h4>
+    <h4>Welcome {{username}}!</h4>
+    <form action="/website/" method="post">
+        {% csrf_token %}
+          <h2>website details</h2>
+          <div class="input-box">
+            <span class="icon"><i class='bx bxs-user'></i></span>
+            <input type="text" id="website" name="webite" required />
+            <label for="website">website name</label>
+          </div>
+          <div class="input-box">
+            <span class="icon" id="passwordToggle"><i class="bx bxs-lock-alt"></i></span>
+            <input type="password" name="website_password" required id="website_password"/>
+            <label for="website_password">Password</label>
+          </div>
+          <button type="submit" class="saveButton">Save</button>
+        </form>
 {% endblock body %}
 
 {% block script %}
