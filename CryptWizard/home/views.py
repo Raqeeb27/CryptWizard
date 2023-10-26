@@ -78,16 +78,11 @@ def dashboard(request):
         
             user = authorize.sign_in_with_email_and_password(email,password)
             session_id = user['idToken']
-            a = authorize.get_account_info(session_id)
-            a = a['users']
-            a = a[0]
-            user_localId = a['localId']
-            name = database.child("Users").child(user_localId).child('Details').child('username').get().val()
-            request.session['user_session_id'] = str(session_id)
+            user_session_id = str(session_id)
+            request.session['user_session_id'] = user_session_id
 
-            if not request.session.get('logged_in_successfully_message', False):
-                messages.success(request, "Logged in Successfully!")
-                request.session['logged_in_successfully_message'] = True        
+            messages.success(request, "Logged in Successfully!")
+                   
         except:
             messages.error(request, "Invalid Credentials!")
             return redirect('signin')
@@ -98,16 +93,17 @@ def dashboard(request):
     
     else:
         user_session_id = request.session['user_session_id']
-        a = authorize.get_account_info(user_session_id)
-        a = a['users']
-        a = a[0]
-        user_localId = a['localId']
-        name = database.child("Users").child(user_localId).child('Details').child('username').get().val()
+
+    a = authorize.get_account_info(user_session_id)
+    a = a['users']
+    a = a[0]
+    user_localId = a['localId']
+    name = database.child("Users").child(user_localId).child('Details').child('username').get().val()
 
     return render(request, 'dashboard.html', {'username': name})
 
 def logout(request):
+    del request.session['user_session_id']
     auth.logout(request)
-    request.session['logged_in_successfully_message'] = False
     messages.success(request, "Logged out Successfully!")
     return redirect('signin')
