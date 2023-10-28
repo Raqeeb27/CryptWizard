@@ -1,7 +1,13 @@
-from django.shortcuts import redirect, render, HttpResponse
+from datetime import datetime, timedelta
 from django.contrib import auth, messages
-import pyrebase
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponse
+from django.urls import reverse
+from django.views.decorators.cache import cache_control
+from django.views.decorators.cache import never_cache
 from .encrypt_decrypt import *
+import pyrebase
 
 
 # Create your views here.
@@ -38,37 +44,38 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        try:
-            user = auth.get_account_info(email)
-            messages.error(request, "Email already exists! Registration Failed.")
-            return redirect('register')
-        except:
-            pass
-
         if confirm_password != password :
-            messages.error(request, "Passwords doesn't match! Registration Failed.")
+            messages.warning(request, "Passwords doesn't match! Registration Failed.", "warning")
             return redirect('register')
         
         try:
             user = authorize.create_user_with_email_and_password(email, password)
+
             uid = user['localId']
             encrypted_user_master_password = encrypt_password(uid,password)
             user_details = {'username':username, 'firstname':firstname, 'lastname':lastname, 'email':email, 'password':encrypted_user_master_password.decode('utf-8'), 'status':'1'}
 
             database.child("Users").child(uid).child('Details').set(user_details)
+
+            session_id = user['idToken']
+            request.session['user_session_id'] = str(session_id)
             
         except:
-            messages.error(request, "Unable to Register user! Please enter valid Email and Password.")
+            messages.warning(request, "Email already exists! Registration Failed.", "warning")
             return redirect('register')
 
-        messages.success(request, "Registeration Successfull!")
-        return redirect('signin')
+        messages.success(request, "Registeration Successfull!", "success")
+        return redirect('dashboard')
 
     return render(request, 'register.html')
 
+@never_cache
 def signin(request):
+    if request.session.get('user_session_id'):
+        return redirect('dashboard')
     return render(request, 'signin.html')
 
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def dashboard(request):
     
     if request.method == 'POST':
@@ -81,14 +88,15 @@ def dashboard(request):
             user_session_id = str(session_id)
             request.session['user_session_id'] = user_session_id
 
-            messages.success(request, "Logged in Successfully!")
+            messages.success(request, "Logged in Successfully!", "success")
+            return HttpResponseRedirect(reverse('dashboard'))
                    
         except:
-            messages.error(request, "Invalid Credentials!")
+            messages.warning(request, "Invalid Credentials!", "warning")
             return redirect('signin')
         
     elif not request.session.get('user_session_id'):
-        messages.error(request, "Session Expired! Please Sign in to access Dashboard.")
+        messages.warning(request, "Session Expired! Please Sign in to access Dashboard.", "warning")
         return redirect('signin')
     
     else:
@@ -100,10 +108,16 @@ def dashboard(request):
     user_localId = a['localId']
     name = database.child("Users").child(user_localId).child('Details').child('username').get().val()
 
-    return render(request, 'dashboard.html', {'username': name})
+    response = HttpResponse(render(request, 'dashboard.html', {'username': name}))
 
+    expiration_date = datetime.now() + timedelta(minutes=30)
+    response['Expires'] = expiration_date.strftime('%a, %d %b %Y %H:%M:%S GMT')
+
+    return response
+
+@never_cache
 def logout(request):
     del request.session['user_session_id']
     auth.logout(request)
-    messages.success(request, "Logged out Successfully!")
-    return redirect('signin')
+    messages.success(request, "Logged out Successfully!", "success")
+    return HttpResponseRedirect(reverse('signin'))

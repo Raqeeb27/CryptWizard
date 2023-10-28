@@ -138,3 +138,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# Enable secure cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Set session timeout (adjust the value according to your requirements)
+SESSION_COOKIE_AGE = 1800  # 1 hour
+
+# Enable HTTP-only cookies
+SESSION_COOKIE_HTTPONLY = True
+
+# Use a strong session engine
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+# Enable clickjacking protection
+X_FRAME_OPTIONS = "DENY"
