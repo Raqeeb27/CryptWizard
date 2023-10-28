@@ -1,28 +1,27 @@
 from datetime import datetime, timedelta
+from decouple import config
 from django.contrib import auth, messages
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponse
 from django.urls import reverse
-from django.views.decorators.cache import cache_control
-from django.views.decorators.cache import never_cache
+from django.views.decorators.cache import cache_control, never_cache
 from .encrypt_decrypt import *
 import pyrebase
 
 
 # Create your views here.
-config = {
-    "apiKey": "AIzaSyC35iHrX-arm-h-PQz1eFC3BjiH0d4pPfI",
-    "authDomain": "cryptwizard-bf4b0.firebaseapp.com",
-    "databaseURL": "https://cryptwizard-bf4b0-default-rtdb.firebaseio.com",
-    "projectId": "cryptwizard-bf4b0",
-    "storageBucket": "cryptwizard-bf4b0.appspot.com",
-    "messagingSenderId": "881303371926",
-    "appId": "1:881303371926:web:c703581b0754c05d1602b7",
-    "measurementId": "G-46EH72X4MX"
+FIREBASE_CONFIG = {
+    "apiKey": config('FIREBASE_API_KEY'),
+    "authDomain": config('FIREBASE_AUTH_DOMAIN'),
+    "databaseURL": config('FIREBASE_DATABASE_URL'),
+    "projectId": config('FIREBASE_PROJECT_ID'),
+    "storageBucket": config('FIREBASE_STORAGE_BUCKET'),
+    "messagingSenderId": config('FIREBASE_MESSAGING_SENDER_ID'),
+    "appId": config('FIREBASE_APP_ID'),
+    "measurementId": config('FIREBASE_MEASUREMENT_ID')
 }
 
-firebase = pyrebase.initialize_app(config)
+firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
 authorize = firebase.auth()
 database = firebase.database()
 
