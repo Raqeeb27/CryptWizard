@@ -106,8 +106,9 @@ def dashboard(request):
     a = a[0]
     user_localId = a['localId']
     name = database.child("Users").child(user_localId).child('Details').child('username').get().val()
+    user_email = database.child("Users").child(user_localId).child('Details').child('email').get().val()
 
-    response = HttpResponse(render(request, 'dashboard.html', {'username': name}))
+    response = HttpResponse(render(request, 'dashboard.html', {'username': name, 'useremail':user_email,}))
 
     expiration_date = datetime.now() + timedelta(minutes=30)
     response['Expires'] = expiration_date.strftime('%a, %d %b %Y %H:%M:%S GMT')

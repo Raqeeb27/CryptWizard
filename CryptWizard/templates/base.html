@@ -668,8 +668,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <span class="wizardimgcontainer-smallscreen">
-          <a href="/static/img/wizard.jpg" target="_blank"><img src="/static/img/wizard.jpg" alt="Blank Image" id="wizardimg-smallscreen"></a>
-        </span></div>
+          <img src="/static/img/wizard.jpg" alt="Profile Image" id="wizardimg-smallscreen" onclick="profileToggle();">
+        </span>
+        </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul
             class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex align-items-center"
@@ -721,27 +722,31 @@
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/signin"
-                  ><i class="bx bxs-user bx-flashing"></i> Sign in </a
-                >
+                <a class="nav-link" href="/signin">
+                  {% if request.session.user_session_id %}
+                    <i class="bx bxs-dashboard bx-flashing"></i> Dashboard
+                  {% else %}
+                    <i class="bx bxs-user bx-flashing"></i> Sign in
+                  {% endif %}
+                </a>
               </li>
             </ul>
           </span>
         </div>
         <span class="wizardimgcontainer-bigscreen">
-          <a href="/static/img/wizard.jpg" target="_blank"><img src="/static/img/wizard.jpg" alt="Blank Image" id="wizardimg-bigscreen"></a>
+          <img src="/static/img/wizard.jpg" alt="Profile Image" id="wizardimg-bigscreen" onclick="profileToggle();">
         </span>
       </div>
     </nav>
     
     <div class="content">
       {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endfor %}
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
       {% endif %}
       {% block body %} {% endblock body %}
     </div>
@@ -770,7 +775,11 @@
             </ul>
             <ul class="box">
               <li class="link_name">ACCOUNT</li>
-              <li><a href="/signin"><i class='bx bxs-chevron-right' ></i> Sign in</a></li>
+              {% if request.session.user_session_id %}
+                <li><a href="/signin"><i class='bx bxs-chevron-right' ></i> Dashboard</a></li>                    
+              {% else %}
+                <li><a href="/signin"><i class='bx bxs-chevron-right' ></i> Sign in</a></li>                    
+              {% endif %}
               <li><a href="/register"><i class='bx bxs-chevron-right' ></i> Register</a></li>
             </ul>
           </div>

@@ -163,7 +163,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 # Set session timeout (adjust the value according to your requirements)
-SESSION_COOKIE_AGE = 1800  # 1 hour
+SESSION_COOKIE_AGE = 1800  
 
 # Enable HTTP-only cookies
 SESSION_COOKIE_HTTPONLY = True
