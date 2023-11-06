@@ -46,7 +46,6 @@
   margin-top: 20px;
   margin-bottom: 20px;
   position: relative;
-  z-index: 1;
   animation: slideInFromRight 0.5s ease-in;
 }
 #typing-text{
@@ -194,6 +193,7 @@
 {% endblock body %}
 
 {% block script %}
+<script>
 function clickNextButton() {
   const navbar = document.getElementById("navbarSupportedContent");
   if (navbar.classList.contains("show")) {
@@ -202,4 +202,5 @@ function clickNextButton() {
   document.querySelector('[data-bs-target="#carouselExampleCaptions"][data-bs-slide="next"]').click();
 }
 setInterval(clickNextButton, 4000);
+</script>
 {% endblock script %} 

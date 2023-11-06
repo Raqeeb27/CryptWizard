@@ -265,7 +265,7 @@
       }
       .navbar {
         position: relative;
-        z-index: 1000;
+        z-index: 2;
         background: rgba(0, 0, 0, 0.5);
       }
       @media (max-width: 992px) {
@@ -366,7 +366,15 @@
         height:100%;
         object-fit:cover;
         border-radius:50%;
-      }      
+      }
+      #navbarRegister{
+        font-family: HighTowerText_Italic;
+        font-size: 20px;
+      }   
+      #navbarSignin{
+        font-family: HighTowerText_Italic;
+        font-size: 20px;
+      }   
       .content {
         margin-top: 90px;
         text-align: center;
@@ -378,6 +386,7 @@
         position: absolute;
         top:65px;
         width:100%;
+        z-index: 2;
       }
 
 
@@ -717,12 +726,12 @@
           <span class="d-flex">
             <ul class="navbar-nav mx-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/register"
+                <a class="nav-link" href="/register" id="navbarRegister"
                   ><i class="bx bx-user"></i> Register</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/signin">
+                <a class="nav-link" href="/signin" id="navbarSignin">
                   {% if request.session.user_session_id %}
                     <i class="bx bxs-dashboard bx-flashing"></i> Dashboard
                   {% else %}
@@ -833,8 +842,6 @@
         });
       });
     </script>
-    <script>
       {% block script %}{% endblock script %}   
-    </script> 
   </body>
 </html>

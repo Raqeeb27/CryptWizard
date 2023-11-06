@@ -1,168 +1,238 @@
-{% extends "base.html" %}
+{% extends "basedashboard.html" %}
 
-{% block title %}Dashboard |{% endblock title %}
-
-{% block style %}
-body {
-  background-image: url(/static/img/starrynight_purple3.jpg);
+{% block dashboardstyle %}
+.content{
+  margin-top: 80px;
 }
-#wizardimg-smallscreen{
-  cursor: pointer;
+.dashboard-content{
+  margin-left: 110px;
+  text-align: left;
 }
-#wizardimg-bigscreen{
-  cursor: pointer;
+.dashboard-content h4{
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
-.user_profile_dropdown{
-  position: absolute;
-  top: 120px;
-  right: 10px;
-  padding: 10px 10px;
-  width: 180px;
-  box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-  border-radius: 14px;
-  transition: 0.5s;
-  visibility: hidden;
-  opacity: 0;
-  background: #fff;
-  justify-content: center;
-  z-index: 1000;
+#name{
+  font-family: HighTowerText_Italic;
+  font-size: larger;
+  font-weight: 500;
 }
-.user_profile_dropdown.active{
-    top: 80px;
-    right: 10px;
-    visibility: visible;
-    opacity: 1;
+.websites-box{
+  margin-top: 3%;
+  margin-left: 1.5%;
+  width: 95%;
+  background-color: #262d8c;
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
 }
-.user_profile_dropdown::before{
-    content: '';
-    position: absolute;
-    top: -5px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    transform: rotate(45deg);
+.websites-box .websites-box-content{
+  padding: 20px;
 }
-.user_profile_dropdown img{
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-top: 10px;
-}
-.user_profile_dropdown h4{
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
-    padding: 6px 0 0px;
-    font-weight: 500;
-    color: #555;
-    line-height: 1.2em;
-    margin: 0;
-}
-.user_profile_dropdown h5{
-    font-size: 14px;
-    color: #bcbbbb;
-    margin: 0 0 14px;
-}
-#hr_below_email{
-  border: 0;
-  height: 1px;
-  width: 100%;
-  background: #878686;
-  margin: 5px 0 8px;
-}
-.user_profile_dropdown ul{
-  padding: 0;
+.websites-box .websites-box-content .websites-box-top{
   display: flex;
-  flex-direction: column;
-  justify-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.user_profile_dropdown ul li{
-    list-style: none;
-    padding: 10px 0;
+.search-button{
+  cursor: pointer;
+  border-radius: 10px;
 }
-.user_profile_dropdown ul li a img{
-  width: 20px;
-  height: 20px;
+#addButtonImg{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 25%;
+  cursor: pointer;
+}
+.dim-background {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+.websites-box .websites-box-content ul{
+  padding: 0;
+}
+.websites-box .websites-box-content ul li{
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #f21f4d;
+  margin: 15px 0;
+  padding: 10px 20px;
+  min-height: 45px;
+  cursor: pointer;
+  border-radius: 22.5px;
+  color: #fff;
+  box-shadow: 5px 5px 7px rgba(0,0,0,0.25), inset 2px 2px 5px rgba(0,0,0,0.5), inset -3px -3px 5px rgba(0,0,0,0.5);
+}
+
+
+.dialog-box {
+  display: none;
+  position: fixed;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;
+  padding: 25px;
+  background: #534646;
+  z-index: 3;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.dialog-box span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+#dialogCloseButton{
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
   border-radius: 50%;
-  margin: 0;
+  cursor: pointer;
 }
-.user_profile_dropdown ul li a{
-    display: inline-block;
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-    transition: 0.5s;
-    cursor: pointer;
+.dialog-field {
+  margin-top: 18px;
 }
-.user_profile_dropdown ul li a:hover{
-    color: #ff5d94;
-    transform: translateX(6px)
+.dialog-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
-{% endblock style %}
+.dialog-field input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 10px);
+  padding: 5px;
+  margin-top: 5px;
+  font-size: 14px;
+}
+.dialog-field button {
+  border: none;
+  padding: 5px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #bb3131;
+  color: #fff;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+.dialog-field button:hover {
+  background-color: #991f1f;
+}
+.dialog-save-cancel{
+  margin: 20px 18px;
+  display: flex;
+  justify-content: space-between;
+}
+.dialog-save-cancel button{
+  border-radius: 10px;
+  width: 40%;
+  padding: 5px 10px;
+}
+{% endblock dashboardstyle %}
 
-{% block body %}
+{% block dashboardbody %}
+<div class="dashboard-content">
+  <h2 id="dashboard_heading">Dashboard</h2>
+  <h4>Welcome back, <span id="name">{{firstname}} {{lastname}}!</span></h4>
+  <p id="dashboard_greeting">{{randomDashboardGreeting}}</p>
 
-<div class="user_profile_dropdown">
-  <img src="/static/img/wizard.jpg" alt="Profile Photo">
-  <h4>{{username}}</h4>
-  <h5>{{useremail}}</h5>
-  <hr id="hr_below_email">
-  <ul>
-      <li><a href="#"><img src="/static/img/user1.png" alt="User icon"> My Profile <i class='bx bxs-chevron-right' ></i></a></li>
-      <li><a href="#"><i class='bx bx-cog bx-spin' ></i> Settings <i class='bx bxs-chevron-right' ></i></a></li>
-      <li><a href='{% url 'log' %}'"><i class='bx bx-log-out'></i> Logout </a></li>
-  </ul>
+  <div class="websites-box">
+    <div class="websites-box-content">
+      <div class="websites-box-top">
+        <span>0 saved Passwords</span>
+        <span class="search-bar">
+          <i class='bx bx-search-alt-2' ></i>
+          <input type="text" id="searchInput" placeholder="Search passwords...">
+          <button type="button" class="search-button" onclick="searchPasswords()">Search</button>
+        </span>
+        <img src="/static/img/add_button.png" alt="Add" id="addButtonImg" onclick="openDialog()">
+      </div>
+      <hr>
+      <ul id="website_list"></ul>
+    </div>
+  </div>
+  <div class="dialog-box" id="addPasswordDialog">
+    <span>Add New Password <img src="/static/img/close_button.jpg" alt="close" id="dialogCloseButton" onclick="closeDialog()"></span>
+    <div class="dialog-field">
+      <label for="dialog_website_input">Website</label>
+      <input type="text" id="dialog_website_input" placeholder="example.com" />
+    </div>
+  
+    <div class="dialog-field">
+      <label for="dialog_username_input">Username</label>
+      <input type="text" id="dialog_username_input"/>
+    </div>
+  
+    <div class="dialog-field">
+      <label for="dialog_password_input">Password</label>
+      <input type="text" id="dialog_password_input"/>
+      <button type="button" onclick="generatePassword()"> Generate </button>
+    </div>      
+    
+    <div class="dialog-save-cancel">
+      <button type="button" onclick="savePassword()"> Save </button>
+      <button type="button" onclick="closeDialog()"> Cancel </button>
+    </div>
+  </div>
 </div>
-    <h2>Dashboard</h2>
-    <h4>Welcome {{username}}!</h4>
-    <form action="/website/" method="post">
-        {% csrf_token %}
-          <h2>website details</h2>
-          <div class="input-box">
-            <span class="icon"><i class='bx bxs-user'></i></span>
-            <input type="text" id="website" name="webite" required />
-            <label for="website">website name</label>
-          </div>
-          <div class="input-box">
-            <span class="icon" id="passwordToggle"><i class="bx bxs-lock-alt"></i></span>
-            <input type="password" name="website_password" required id="website_password"/>
-            <label for="website_password">Password</label>
-          </div>
-          <button type="submit" class="saveButton">Save</button>
-        </form>
-{% endblock body %}
+{% endblock dashboardbody %}
 
-{% block script %}
-document.addEventListener('DOMContentLoaded', function() {
-  document.addEventListener('click', function(event) {
-    const profileMenu = document.querySelector('.user_profile_dropdown');
-    const wizardImgBig = document.getElementById('wizardimg-bigscreen');
-    const wizardImgSmall = document.getElementById('wizardimg-smallscreen');
-    const isClickInsideProfileMenu = profileMenu.contains(event.target);
-    const isClickOnWizardImg = event.target === wizardImgBig || event.target === wizardImgSmall;
-
-    if (!isClickInsideProfileMenu && !isClickOnWizardImg) {
-      profileMenu.classList.remove('active');
-      document.body.classList.remove('no-scroll');
-    }
-  });
-});
-
-function profileToggle() {
-  const profileMenu = document.querySelector('.user_profile_dropdown');
-  const wizardImg = window.innerWidth > 992 ? document.getElementById('wizardimg-bigscreen') : document.getElementById('wizardimg-smallscreen');
-  const imgBounding = wizardImg.getBoundingClientRect();
-  const offsetTop = window.scrollY + imgBounding.bottom + 15;
-
-  if (profileMenu.classList.contains('active')) {
-    profileMenu.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-  } else {
-    profileMenu.style.top = `${offsetTop}px`;
-    profileMenu.classList.add('active');
-    document.body.classList.add('no-scroll');
+{% block dashboardscript %}
+<script>
+  function generatePassword() {
+    fetch('/generate_password/')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("dialog_password_input").value = data.password;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
   }
-}
-{% endblock script %} 
+  function savePassword() {
+    let dialog_website_input_value = document.getElementById('dialog_website_input').value;
+    addItem(dialog_website_input_value);
+    closeDialog();
+  }
+</script>
+<script>
+  function toggleDialogVisibility(displayStatus) {
+    document.getElementById("addPasswordDialog").style.display = displayStatus;
+    const elements = [
+      ...document.querySelectorAll(".dashboard-content > *:not(.dialog-box)"),
+      ...document.querySelectorAll(".sidebar"),
+      ...document.querySelectorAll("footer"),
+      ...document.querySelectorAll(".navbar")
+    ];
+    elements.forEach(element => {
+      if (displayStatus === "block") {
+        element.classList.add("dim-background");
+      } else {
+        element.classList.remove("dim-background");
+      }
+    });
+  }
+  function openDialog() {
+    toggleDialogVisibility("block");
+    document.getElementById("dialog_website_input").value = "";
+    document.getElementById("dialog_username_input").value = "";
+    document.getElementById("dialog_password_input").value = "";
+  }
+  function closeDialog() {
+    toggleDialogVisibility("none");
+  }
+</script>
+<script>
+  let addItem = (text) => {
+    let website_listItem = document.createElement("li");
+    website_listItem.textContent = text;
+    website_list.appendChild(website_listItem);
+  }
+</script>
+{% endblock dashboardscript %}

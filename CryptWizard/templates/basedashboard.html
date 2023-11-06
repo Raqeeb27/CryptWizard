@@ -1,0 +1,430 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard |{% endblock title %}
+
+{% block style %}
+:root {
+  --clr: #000000;
+}
+body {
+  background-image: url(/static/img/starrynight_purple3.jpg);
+}
+#wizardimg-smallscreen{
+  cursor: pointer;
+}
+#wizardimg-bigscreen{
+  cursor: pointer;
+}
+.user_profile_dropdown{
+  position: absolute;
+  top: 120px;
+  right: 10px;
+  padding: 10px 10px;
+  width: 180px;
+  box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+  border-radius: 14px;
+  transition: 0.5s;
+  visibility: hidden;
+  opacity: 0;
+  background: #fff;
+  justify-content: center;
+  z-index: 2;
+}
+.user_profile_dropdown.active{
+    top: 80px;
+    right: 10px;
+    visibility: visible;
+    opacity: 1;
+}
+.user_profile_dropdown::before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transform: rotate(45deg);
+}
+.user_profile_dropdown img{
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+}
+.user_profile_dropdown h4{
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    padding: 6px 0 0px;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.2em;
+    margin: 0;
+}
+.user_profile_dropdown h5{
+    font-size: 14px;
+    color: #bcbbbb;
+    margin: 0 0 14px;
+}
+#hr_below_email{
+  border: 0;
+  height: 1px;
+  width: 100%;
+  background: #878686;
+  margin: 5px 0 8px;
+}
+.user_profile_dropdown ul{
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+.user_profile_dropdown ul li{
+    list-style: none;
+    padding: 10px 0;
+}
+.user_profile_dropdown ul li a img{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0;
+}
+.user_profile_dropdown ul li a{
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.user_profile_dropdown ul li a:hover{
+    color: #ff5d94;
+    transform: translateX(6px)
+}
+
+
+
+
+
+
+.menuToggle {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  background: #b145e9;
+  z-index: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30%;
+}
+.menuToggle::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  transform: translateY(-9px);
+  transition: 0.5s;
+  box-shadow: 0 9px 0 #fff;
+}
+.menuToggle::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  transform: translateY(9px);
+  transition: 0.5s;
+}
+.menuToggle.active::before {
+  transform: translateY(0px) rotate(45deg);
+  box-shadow: 0 0 0 #fff;
+}
+.menuToggle.active::after {
+  transform: translateY(0px) rotate(-45deg);
+}
+
+
+
+
+
+.sidebar {
+  position: fixed;
+  width: 80px;
+  height: 100vh;
+  background: #20102c;
+  transition: 0.5s;
+  overflow: hidden;
+  top: 65px;
+  height: calc(100vh - 65px);
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 1;
+}
+.sidebar.active {
+  width: 230px;
+}
+.sidebar ul {
+  padding-top: 80px;
+  position: relative;
+  height: calc(100vh - 65px);
+  padding-left: 10px;
+}
+.sidebar ul li {
+  position: relative;
+  list-style: none;
+}
+.sidebar ul li.active {
+  background: var(--clr);
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+.sidebar ul li.active::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 5px 5px 0 5px var(--clr);
+  background: transparent;
+}
+.sidebar ul li.active::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 5px -5px 0 5px var(--clr);
+  background: transparent;
+}
+.sidebar ul li a {
+  position: relative;
+  display: flex;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.sidebar ul li a .icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 60px;
+  padding-left: 10px;
+  height: 70px;
+  font-size: 1.5em;
+  color: #fff;
+  transition: 0.5s;
+}
+.sidebar ul li a .text {
+  position: relative;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: #fff;
+  padding-left: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+}
+.sidebar ul li.active a .icon {
+  color: #fff;
+}
+.sidebar ul li.active a .text {
+  color: var(--bg);
+}
+.sidebar ul li:hover a .icon,
+.sidebar ul li:hover a .text {
+  color: var(--bg);
+}
+.sidebar ul li.active a .icon {
+  z-index: 1;
+}
+.sidebar ul li.active a .icon::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  width: 60px;
+  background: var(--bg);
+  border-radius: 50%;
+  transition: 0.5s;
+}
+.sidebar ul li:hover.active a .icon::before {
+  background: #fff;
+}
+.bottom {
+  position: absolute;
+  width: 100%;
+}
+#hr_sidebar{
+    margin: 16px 0 0;
+}
+@media (max-width: 956px){
+  .sidebar {
+    width: 65px
+  }
+  .sidebar.active {
+    width: 210px
+  }
+  .sidebar ul {
+    padding-top: 70px;
+    padding-left: 7px;
+  }
+  .sidebar ul li.active a .icon::before {
+    width: 50px;
+  }
+  .sidebar ul li a .text {
+    height: 60px;
+  }
+  .menuToggle {
+    top: 15px;
+    left: 10px;
+  }
+  .sidebar ul li a .icon {
+    min-width: 50px;
+    padding-left: 10px;
+    height: 60px;
+  }
+}
+
+{% block dashboardstyle %}{% endblock dashboardstyle %}
+{% endblock style %}
+
+{% block body %}
+<div class="user_profile_dropdown">
+  <img src="/static/img/wizard.jpg" alt="Profile Photo">
+  <h4>{{username}}</h4>
+  <h5>{{useremail}}</h5>
+  <hr id="hr_below_email">
+  <ul>
+      <li><a href="#"><img src="/static/img/user1.png" alt="User icon"> My Profile <i class='bx bxs-chevron-right' ></i></a></li>
+      <li><a href="#"><i class='bx bx-cog bx-spin' ></i> Settings <i class='bx bxs-chevron-right' ></i></a></li>
+      <li><a href='{% url 'log' %}'><i class='bx bx-log-out'></i> Logout </a></li>
+  </ul>
+</div>
+<div class="sidebar">
+  <div class="menuToggle"></div>
+  <ul>
+    <div class="Menulist">
+      <li style="--bg: #f44336" class="active">
+        <a href="#">
+          <div class="icon"><ion-icon name="home-outline"></ion-icon></div>
+          <div class="text">Home</div>
+        </a>
+      </li>
+      <li style="--bg: #ffa117">
+        <a href="#">
+          <div class="icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="text">Profile</div>
+        </a>
+      </li>
+      <li style="--bg: #0fc70f">
+        <a href="#">
+          <div class="icon">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+          </div>
+          <div class="text">Indox</div>
+        </a>
+      </li>
+      <li style="--bg: #2196f3">
+        <a href="#">
+          <div class="icon">
+            <ion-icon name="bar-chart-outline"></ion-icon>
+          </div>
+          <div class="text">Analytics</div>
+        </a>
+      </li>      
+      <li style="--bg: #e91e63">
+        <a href="#">
+          <div class="icon">
+            <ion-icon name="settings-outline"></ion-icon>
+          </div>
+          <div class="text">Settings</div>
+        </a>
+      </li>
+    </div>
+    <hr id="hr_sidebar">
+    <div class="bottom">          
+      <li style="--bg: #ff2222">
+        <a href='{% url 'log' %}'>
+          <div class="icon">
+            <i class='bx bx-log-out'></i>
+          </div>
+          <div class="text">Logout</div>
+        </a>
+      </li>
+    </div>
+  </ul>
+</div>
+{% block dashboardbody %}{% endblock dashboardbody %}
+{% endblock body %}
+
+{% block script %}
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('click', function(event) {
+    const profileMenu = document.querySelector('.user_profile_dropdown');
+    const wizardImgBig = document.getElementById('wizardimg-bigscreen');
+    const wizardImgSmall = document.getElementById('wizardimg-smallscreen');
+    const isClickInsideProfileMenu = profileMenu.contains(event.target);
+    const isClickOnWizardImg = event.target === wizardImgBig || event.target === wizardImgSmall;
+
+    if (!isClickInsideProfileMenu && !isClickOnWizardImg) {
+      profileMenu.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    }
+  });
+});
+
+function profileToggle() {
+  const profileMenu = document.querySelector('.user_profile_dropdown');
+  const wizardImg = window.innerWidth > 992 ? document.getElementById('wizardimg-bigscreen') : document.getElementById('wizardimg-smallscreen');
+  const imgBounding = wizardImg.getBoundingClientRect();
+  const offsetTop = window.scrollY + imgBounding.bottom + 15;
+
+  if (profileMenu.classList.contains('active')) {
+    profileMenu.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+  } else {
+    profileMenu.style.top = `${offsetTop}px`;
+    profileMenu.classList.add('active');
+    document.body.classList.add('no-scroll');
+  }
+}
+</script>
+<script>
+  let menuToggle = document.querySelector(".menuToggle");
+  let sidebar = document.querySelector(".sidebar");
+  menuToggle.onclick = function () {
+    menuToggle.classList.toggle("active");
+    sidebar.classList.toggle("active");
+  };
+  let Menulist = document.querySelectorAll(".Menulist li");
+  function activeLink() {
+    Menulist.forEach((item) => item.classList.remove("active"));
+    this.classList.add("active");
+  }
+  Menulist.forEach((item) => item.addEventListener("click", activeLink));
+</script>
+{% block dashboardscript %}{% endblock dashboardscript %}
+{% endblock script %}
