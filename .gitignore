@@ -1,5 +1,16 @@
-scripts/__pycache__/
+# Python-generated files
+__pycache__/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Ignore uv.lock
+uv.lock
+
 CryptWizard/CryptWizard/__pycache__/
 CryptWizard/home/__pycache__/
+CryptWizard/home/migrations/
 CryptWizard/db.sqlite3
 #CryptWizard/.env
